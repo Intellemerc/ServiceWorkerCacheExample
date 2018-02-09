@@ -1,10 +1,13 @@
 import { combineReducers } from "redux";
 
-const test = (state = {}, action) => {
+const nav = (state = {}, action) => {
+  if (action.type === "nav/load") {
+    return action.data;
+  }
   return state;
 };
 const reducers = {
-  test
+  nav
 };
 const rootApp = combineReducers(reducers);
 
