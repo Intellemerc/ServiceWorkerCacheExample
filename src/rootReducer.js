@@ -1,8 +1,18 @@
 import { combineReducers } from "redux";
 
-const nav = (state = {}, action) => {
+const nav = (state = { loading: true }, action) => {
+  if (action.type === "nav/loading") {
+    return {
+      ...state,
+      loading: true
+    };
+  }
   if (action.type === "nav/load") {
-    return action.data;
+    return {
+      ...state,
+      loading: false,
+      data: action.data
+    };
   }
   return state;
 };
