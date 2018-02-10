@@ -7,6 +7,7 @@ const nav = (state = { loading: true }, action) => {
       loading: true
     };
   }
+  //nav finished loading populate data
   if (action.type === "nav/load") {
     return {
       ...state,
@@ -16,9 +17,8 @@ const nav = (state = { loading: true }, action) => {
   }
   return state;
 };
-const reducers = {
+const rootApp = combineReducers({
   nav
-};
-const rootApp = combineReducers(reducers);
+});
 
 export default rootApp;

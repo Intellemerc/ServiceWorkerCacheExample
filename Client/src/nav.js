@@ -24,6 +24,7 @@ const mapStateToProps = state => {
 const Nav = ({ loading, data }) => {
   return (
     <nav style={style}>
+      {/*are we waiting for nav to download?*/}
       {loading ? (
         <span>loading...</span>
       ) : data ? (

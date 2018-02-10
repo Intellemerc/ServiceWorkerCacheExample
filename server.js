@@ -10,39 +10,46 @@ let wsServer = null;
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
+//send message to all clients including self
 function broadcast(data) {
   wss.clients.forEach(function each(client) {
+    //only send to active clients
     if (client.readyState === WebSocket.OPEN) {
       client.send(data);
     }
   });
 }
 
+//nav menu load
 app.get("/api/nav", (req, res) => {
+  //add timestamp to first menu item so it is easier to tell when it is cached
   navMenu.default[0].title = new Date().toTimeString();
   res.send(navMenu.default);
 });
 
+//fake url to simulate a cache clearing event
 app.get("/api/serverClear", (req, res) => {
-  broadcast(JSON.stringify({ action: "reloadNav" }));
+  //send clear cache to all clients
+  broadcast(JSON.stringify({ action: "clearCache" }));
+  //send that message ic complete
   res.send({ finished: true });
 });
 
+//when a new websocket client is connected
 wss.on("connection", function connection(ws, req) {
-  const location = url.parse(req.url, true);
-  // You might use location.query.access_token to authenticate or share sessions
-  // or req.headers.cookie (see http://stackoverflow.com/a/16395220/151312)
-
+  //when a message is sent from a client
   ws.on("message", function incoming(message) {
     console.log("received: %s", message);
   });
-  ws.on("error", () => console.log("disconnected client"));
+  //handle disconnections and errors
+  ws.on("error", () => console.log("Disconnected/Error client"));
   console.log("ws client connected");
-  //ws.send(JSON.stringify({ message: "something" }));
   wsServer = ws;
 });
 
+//open the port for websocket one greater than server port
 server.listen(port + 1, function listening() {
-  console.log("Listening on %d", server.address().port);
+  console.log("Websocket Listening on", server.address().port);
 });
+//start listening on port 500 for api endpoint
 app.listen(port, () => console.log(`Listening on port ${port}`));

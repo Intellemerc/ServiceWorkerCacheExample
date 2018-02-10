@@ -11,6 +11,7 @@ function* rootSaga() {
     watchNavReloadSaga(),
     watchClearSaga(),
     serverEventSaga(),
+    //run this saga to kick off loading nav
     navLoadingSaga()
   ]);
 }

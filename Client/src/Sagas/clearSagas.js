@@ -3,8 +3,8 @@ import API from "./API";
 
 //event to clear cache triggered from the server side
 function* navClearServerCacheSaga() {
-  const action = { type: "nav/clearingServerCache" };
-  yield put(action);
+  //let rest of the app know I am clearing cache
+  yield put({ type: "nav/clearingServerCache" });
 
   //call the api to call the even via service worker
   yield call(API.GET, "/api/serverClear");
@@ -12,16 +12,18 @@ function* navClearServerCacheSaga() {
 
 //clear the cache triggered from the client side
 export function* navClearCacheSaga() {
-  const action = { type: "nav/clearingCache" };
-  yield put(action);
+  yield put({ type: "nav/clearingCache" });
 
+  //call into the service worker asking it to clear cache
   const result = yield call(window.send_message_to_sw, {
     action: "clearCache",
     cacheEntry: "api/nav"
   });
 
+  //response from the service worker, just loging for now
   console.log(result);
 
+  //put message into redux that cache clearing finished
   yield put({
     type: "nav/cacheCleared"
   });

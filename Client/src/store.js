@@ -18,7 +18,7 @@ export const store = createStore(
   devTools
 );
 
-// Make sure signalr is connected
+// Make sure websockets are connected
 websocketHandler(store);
 
 export const runSaga = () => {
