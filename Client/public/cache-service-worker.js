@@ -18,12 +18,13 @@ self.addEventListener("activate", function(event) {
 //returned cached copy instead of server copy
 self.addEventListener("fetch", function(event) {
   if (urlsToCache.find(itm => event.request.url.includes(itm))) {
-    console.log("CSW: attempting cache load", event.request.url);
+    //console.log("CSW: attempting cache load", event.request.url);
     event.respondWith(
       caches.open(cacheName).then(function(cache) {
         return cache.match(event.request).then(function(response) {
           console.log(
-            "CSW: cache " + (response ? "hit" : "miss"),
+            "%cCSW: cache " + (response ? "hit" : "miss"),
+            "color: " + (response ? "green" : "red"),
             event.request.url
           );
           return (

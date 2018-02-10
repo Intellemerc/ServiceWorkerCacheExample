@@ -12,23 +12,18 @@ const wss = new WebSocket.Server({ server });
 
 function broadcast(data) {
   wss.clients.forEach(function each(client) {
-    if (client !== wsServer && client.readyState === WebSocket.OPEN) {
+    if (client.readyState === WebSocket.OPEN) {
       client.send(data);
     }
   });
 }
 
 app.get("/api/nav", (req, res) => {
-  navMenu.default[0].title = new Date().getTime();
+  navMenu.default[0].title = new Date().toTimeString();
   res.send(navMenu.default);
 });
 
 app.get("/api/serverClear", (req, res) => {
-  const replyMessage = JSON.stringify({
-    action: "clearCache",
-    cacheEntry: "api/nav"
-  });
-  wsServer.send(replyMessage);
   broadcast(JSON.stringify({ action: "reloadNav" }));
   res.send({ finished: true });
 });

@@ -9,7 +9,8 @@ export function* serverEventSaga(evt) {
     yield call(navClearCacheSaga);
     yield call(navLoadingSaga);
   } else if (evt.data.action === "reloadNav") {
-    yield delay(5000);
+    yield delay(1000);
+    yield call(navClearCacheSaga);
     yield call(navLoadingSaga);
   } else {
     console.log("Missed Event", evt);
