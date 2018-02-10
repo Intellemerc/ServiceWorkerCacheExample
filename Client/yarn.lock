@@ -3689,6 +3689,14 @@ jest@20.0.4:
   dependencies:
     jest-cli "^20.0.4"
 
+jquery-deferred@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/jquery-deferred/-/jquery-deferred-0.3.1.tgz#596eca1caaff54f61b110962b23cafea74c35355"
+
+jquery-param@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/jquery-param/-/jquery-param-0.2.0.tgz#55da8130428c50980eb516491c1b77cc78f0dcb1"
+
 js-base64@^2.1.9:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
@@ -5696,6 +5704,13 @@ shellwords@^0.1.1:
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
+
+signalr-no-jquery@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/signalr-no-jquery/-/signalr-no-jquery-0.1.8.tgz#3b1c0ff7cc1c59badd9c97898f3bb2e654e077da"
+  dependencies:
+    jquery-deferred "0.3.1"
+    jquery-param "0.2.0"
 
 slash@^1.0.0:
   version "1.0.0"

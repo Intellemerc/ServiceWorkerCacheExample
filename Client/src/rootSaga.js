@@ -5,6 +5,7 @@ import API from "./API";
 function* watchNavReloadSaga() {
   yield takeLatest("nav/reload", navLoadingSaga);
   yield takeLatest("nav/clearCache", navClearCacheSaga);
+  yield takeLatest("nav/clearServerCache", navClearServerCacheSaga);
 }
 
 function* navLoadingSaga() {
@@ -16,6 +17,17 @@ function* navLoadingSaga() {
   yield put({
     type: "nav/load",
     data: result
+  });
+}
+
+function* navClearServerCacheSaga() {
+  const action = { type: "nav/clearingServerCache" };
+  yield put(action);
+
+  yield call(API.GET, "/api/serverClear");
+
+  yield put({
+    type: "nav/reload"
   });
 }
 

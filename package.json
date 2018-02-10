@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "express": "^4.16.2",
-    "signalrjs": "^0.2.2"
+    "signalrjs": "^0.2.2",
+    "ws": "^4.0.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.0"

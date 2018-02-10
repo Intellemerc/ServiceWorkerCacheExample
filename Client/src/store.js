@@ -1,5 +1,6 @@
 import createSagaMiddleware from "redux-saga";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import websocketHandler from "./websocketHandler";
 
 import reducer from "./rootReducer";
 import sagaRoot from "./rootSaga";
@@ -16,6 +17,9 @@ export const store = createStore(
   }),
   devTools
 );
+
+// Make sure signalr is connected
+websocketHandler(store);
 
 export const runSaga = () => {
   sagaMiddleware.run(sagaRoot);

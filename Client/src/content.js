@@ -12,23 +12,32 @@ const clearCacheAction = () => {
     type: "nav/clearCache"
   };
 };
+const clearServerCacheAction = () => {
+  return {
+    type: "nav/clearServerCache"
+  };
+};
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       reload: reloadAction,
-      clear: clearCacheAction
+      clear: clearCacheAction,
+      clearServer: clearServerCacheAction
     },
     dispatch
   );
 };
 
-const Content = ({ reload, clear }) => {
+const Content = ({ reload, clear, clearServer }) => {
   return (
     <div>
       <button onClick={reload}>Reload</button>
       <br />
       <br />
       <button onClick={clear}>clear nav cache</button>
+      <br />
+      <br />
+      <button onClick={clearServer}>clear server nav cache</button>
     </div>
   );
 };
