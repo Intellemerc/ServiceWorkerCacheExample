@@ -7,6 +7,16 @@ const url = require("url");
 const app = express();
 const port = process.env.PORT || 5000;
 let wsServer = null;
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client !== wsServer && client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+}
 
 app.get("/api/nav", (req, res) => {
   navMenu.default[0].title = new Date().getTime();
@@ -14,14 +24,14 @@ app.get("/api/nav", (req, res) => {
 });
 
 app.get("/api/serverClear", (req, res) => {
-  wsServer.send(
-    JSON.stringify({ action: "clearCache", cacheEntry: "api/nav" })
-  );
+  const replyMessage = JSON.stringify({
+    action: "clearCache",
+    cacheEntry: "api/nav"
+  });
+  wsServer.send(replyMessage);
+  broadcast(JSON.stringify({ action: "reloadNav" }));
   res.send({ finished: true });
 });
-
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
 
 wss.on("connection", function connection(ws, req) {
   const location = url.parse(req.url, true);
@@ -33,7 +43,7 @@ wss.on("connection", function connection(ws, req) {
   });
   ws.on("error", () => console.log("disconnected client"));
   console.log("ws client connected");
-  ws.send(JSON.stringify({ message: "something" }));
+  //ws.send(JSON.stringify({ message: "something" }));
   wsServer = ws;
 });
 

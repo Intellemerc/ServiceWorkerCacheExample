@@ -17,11 +17,15 @@ self.addEventListener("activate", function(event) {
 
 //returned cached copy instead of server copy
 self.addEventListener("fetch", function(event) {
-  if (urlsToCache.includes(event.request.url)) {
-    console.log(event.request.url);
+  if (urlsToCache.find(itm => event.request.url.includes(itm))) {
+    console.log("CSW: attempting cache load", event.request.url);
     event.respondWith(
       caches.open(cacheName).then(function(cache) {
         return cache.match(event.request).then(function(response) {
+          console.log(
+            "CSW: cache " + (response ? "hit" : "miss"),
+            event.request.url
+          );
           return (
             response ||
             fetch(event.request).then(function(response) {

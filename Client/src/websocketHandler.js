@@ -4,7 +4,7 @@ export default function websocketStart(store, callback) {
   connection.onmessage = evt => {
     try {
       const json = JSON.parse(evt.data);
-      store.dispatch({ type: "serverEvent", json });
+      store.dispatch({ type: "serverEvent", data: json });
     } catch (e) {
       console.log("Parse websocket Json error", e);
     }

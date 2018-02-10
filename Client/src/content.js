@@ -37,7 +37,7 @@ const Content = ({ reload, clear, clearServer }) => {
       <button onClick={clear}>clear nav cache</button>
       <br />
       <br />
-      <button onClick={clearServer}>clear server nav cache</button>
+      <button onClick={clearServer}>clear server nav cache and reload</button>
     </div>
   );
 };
