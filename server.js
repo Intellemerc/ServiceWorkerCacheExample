@@ -24,7 +24,9 @@ function broadcast(data) {
 app.get("/api/nav", (req, res) => {
   //add timestamp to first menu item so it is easier to tell when it is cached
   navMenu.default[0].title = new Date().toTimeString();
-  res.send(navMenu.default);
+  setTimeout(function() {
+    res.send(navMenu.default);
+  }, 500);
 });
 
 //fake url to simulate a cache clearing event
